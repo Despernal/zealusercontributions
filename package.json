@@ -1,0 +1,23 @@
+{
+  "name": "zealusercontributions",
+  "version": "0.0.1",
+  "description": "App to get Kapeli/Dash user contributed docsets and use on Zeal",
+  "engines": {
+    "node": "5.9.1"
+  },
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [
+    "zeal",
+    "dash",
+    "kapeli",
+    "docsets",
+    "user contributions"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.14.0"
+  }
+}

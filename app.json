@@ -1,0 +1,8 @@
+{
+  "name": "Zeal User Contributions",
+  "description": "App to get Kapeli/Dash user contributed docsets and use on Zeal",
+  "repository": "http://zealusercontributions.herokuapp.com/",
+  "logo": "https://avatars2.githubusercontent.com/u/10424263?v=3&s=400",
+  "keywords": ["zeal", "dash", "kapeli", "docsets", "user contributions"],
+  "image": "heroku/nodejs"
+}

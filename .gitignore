@@ -169,3 +169,10 @@ Temporary Items
 .apdisk
 
 # End of https://www.gitignore.io/api/node,webstorm,windows,linux,macos
+
+*.env
+*.dev
+
+# Docker
+Dockerfile
+docker-compose.yml
