@@ -9,12 +9,23 @@ const CDNs = ["", "sanfrancisco.", "newyork.", "london.", "frankfurt."];
 app.set("port", (process.env.PORT || 8080));
 
 
-let getDocsets = function () {
+let getDocsets = function (filterName) {
     return new Promise(function (resolve, reject) {
         axios
             .get(`http://kapeli.com/feeds/zzz/user_contributed/build/index.json`)
             .then((data) => {
-                let docsets = data.data.docsets;
+                let docsets;
+                if(_.isUndefined(filterName) || _.isEmpty(filterName)){
+                    docsets = data.data.docsets;
+                }else {
+                    let t = {};
+                    if(_.isUndefined(data.data.docsets[filterName]) || _.isEmpty(data.data.docsets[filterName])){
+                        t[filterName] = {};
+                    }else {
+                        t[filterName] = data.data.docsets[filterName];
+                    }
+                    docsets = t;
+                }
                 let list = _.map(docsets, function (val, key) {
                     let object = _.clone(val);
                     try {
@@ -68,7 +79,10 @@ app.get("/", function (request, response) {
 app.get("/feeds.json", function (request, response) {
     getDocsets()
         .then((list)=>{
-            response.json(list);
+            response.json(_.map(list, (docset)=>{
+                docset.feed = `${request.protocol}://${request.get('host')}/docsets/${docset.name}.xml`;
+                return docset;
+            }));
         }).catch((err)=>{
             response.json(err);
         });
@@ -81,6 +95,15 @@ app.get("/feeds.xml", function (request, response) {
             response.set('Content-Type', 'text/xml');
             response.send(xmlify(list));
         }).catch((err)=>{
+        response.json(err);
+    });
+});
+
+app.get("/docsets/:name.xml", function (request, response) {
+    getDocsets(request.params.name).then((list)=>{
+        response.set('Content-Type', 'text/xml');
+        response.send(xmlify(list));
+    }).catch((err)=>{
         response.json(err);
     });
 });
