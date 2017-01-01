@@ -8,6 +8,12 @@ const app = express();
 const CDNs = ["", "sanfrancisco.", "newyork.", "london.", "frankfurt."];
 app.set("port", (process.env.PORT || 8080));
 
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
 
 let getDocsets = function (filterName) {
     return new Promise(function (resolve, reject) {
@@ -73,8 +79,10 @@ ${other}
 
 /* VIEWs */
 app.get("/", function (request, response) {
-    response.json("Building...");
+    response.sendFile(__dirname+"/index.html");
 });
+
+app.use(express.static(__dirname + "/public"));
 
 app.get("/feeds.json", function (request, response) {
     getDocsets()
@@ -106,6 +114,17 @@ app.get("/docsets/:name.xml", function (request, response) {
     }).catch((err)=>{
         response.json(err);
     });
+});
+
+app.get("/index.json", function (request, response) {
+    axios
+        .get(`http://kapeli.com/feeds/zzz/user_contributed/build/index.json`)
+        .then((data) => {
+            response.json(data.data);
+        })
+        .catch((err)=>{
+            response.end();
+        });
 });
 
 app.listen(app.get("port"), function () {

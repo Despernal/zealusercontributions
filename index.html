@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>Zeal User Contributions</title>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/normalize/5.0.0/normalize.css">
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <div id="app">
+        <nav>Under development</nav>
+        <header>
+            <div class="container">
+                <div class="img">
+                    <img src="//upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/300px-Google_2015_logo.svg.png" alt="Logo">
+                </div>
+                <div class="search">
+                    <input type="text" placeholder="Start typing here...">
+                </div>
+            </div>
+        </header>
+        <main>
+            <span v-if="loading">Loading...</span>
+            <div class="container" v-if="docsets">
+                <a v-for="(val, key) in docsets" v-bind:href="'/docsets/'+key+'.xml'">{{key}}<br></a>
+            </div>
+        </main>
+        <footer>Footer</footer>
+    </div>
+    <script src="//cdn.jsdelivr.net/vue/2.1.8/vue.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/axios/0.15.3/axios.min.js"></script>
+    <script src="./app.js"></script>
+</body>
+</html>

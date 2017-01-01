@@ -1,0 +1,57 @@
+html, body, #app {
+    height: 100%;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+}
+
+nav, header{
+    background-color: #2B2F48;
+    color: #FFFFFF;
+}
+
+nav{
+    height: 3rem;
+}
+header {
+    height: 25rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+main {
+    flex-grow: 1;
+}
+footer {
+    background-color: #2B2F48;
+    height: 7rem;
+}
+
+header .container {
+    max-width: 30rem;
+    max-height: 15rem;
+    display: flex;
+    flex-direction: column;
+}
+header .container .img {
+    text-align: center;
+}
+
+header .container .search input {
+    height: 3rem;
+    width: 100%;
+    margin-top: 1rem;
+    border-radius: 1.5rem;
+    background-color: #22263A;
+    color: #FFFFFF;
+    border: none;
+    padding-left: 1em;
+    padding-right: 1em;
+    font-size: 1.5rem;
+    box-sizing: border-box;
+}
+header .container .search input:focus {
+    outline: none;
+}
