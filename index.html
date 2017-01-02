@@ -3,30 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="icon" href="https://zealdocs.org/static/img/favicon-16.png" sizes="16x16" type="image/png">
+    <link rel="icon" href="https://zealdocs.org/static/img/favicon-32.png" sizes="32x32" type="image/png">
+    <link rel="icon" href="https://zealdocs.org/static/img/favicon-48.png" sizes="48x48" type="image/png">
+    <link rel="icon" href="https://zealdocs.org/static/img/favicon-62.png" sizes="62x62" type="image/png">
+    <link rel="icon" href="https://zealdocs.org/static/img/favicon-192.png" sizes="192x192" type="image/png">
     <title>Zeal User Contributions</title>
     <link rel="stylesheet" href="//cdn.jsdelivr.net/normalize/5.0.0/normalize.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/flexboxgrid/6.3.2/flexboxgrid.min.css">
     <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
     <div id="app">
-        <nav>Under development</nav>
+        <nav>Non-Official Zeal User Contributions Repository - Create by
+            <a href="https://github.com/sntiagoma" target="_blank">sntiagoma</a></nav>
         <header>
             <div class="container">
                 <div class="img">
-                    <img src="//upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/300px-Google_2015_logo.svg.png" alt="Logo">
+                    <img src="https://avatars2.githubusercontent.com/u/10424263?v=3&s=400" alt="Logo">
                 </div>
                 <div class="search">
-                    <input type="text" placeholder="Start typing here...">
+                    <input type="text" placeholder="Start typing here..." v-model="filter">
                 </div>
             </div>
         </header>
         <main>
-            <span v-if="loading">Loading...</span>
-            <div class="container" v-if="docsets">
-                <a v-for="(val, key) in docsets" v-bind:href="'/docsets/'+key+'.xml'">{{key}}<br></a>
+            <div v-if="loading" style="text-align: center;font-size: 2rem; margin: 5rem; opacity: 0.4">Loading...</div>
+            <div class="row" v-if="docsets">
+                <div class="col-md-3 col-sm-4 col-xs-6" v-for="(val, key) in cdocsets">
+                    <div class="card">
+                        <div class="title">{{key}}</div>
+                        <div class="icon" v-if="val['icon@2x'] && val['icon']">
+                            <img :src="'data:image/png;base64,'+val['icon@2x']" alt="Icon@2x" title="icon@2x.png">
+                            <span>&nbsp;</span>
+                            <img :src="'data:image/png;base64,'+val['icon']" alt="Icon" title="icon.png">
+                        </div>
+                        <div class="icon" v-else>
+                            <img :src="icons.default" alt="Default Icon">
+                        </div>
+                        <div class="btns">
+                            <div class="elm">
+                                <a v-bind:href="'/docsets/'+key+'.xml'" target="_blank">
+                                    <img :src="icons.xml" alt="Feed URL" title="Feed URL">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row copy">
+                <br><br>
+                Zeal User Contributions - Not copyright infringement intended <br><br>
+                Zeal User Contributions it's not related to <a href="https://zealdocs.org" target="_blank">Zeal Docs</a>
+                or <a href="https://kapeli.com/dash" target="_blank">Kapeli - Dash</a> it just generates XML Files
+                base on
+                <a href="http://kapeli.com/feeds/zzz/user_contributed/build/index.json" target="_blank">Dash public json</a>
+                and
+                <a href="https://github.com/zealdocs/zeal/issues/170#issuecomment-71310603" target="_blank">
+                    Kapeli Comment on Zeal Issue</a>, docsets are described in .xml files and downloaded from Kapeli CDNs.
+                <br><br>
+
+                <p style="text-align: left; font-size: 1rem">
+                    To install a docset in Zeal: Copy the .xml url, open Zeal, click on Tools -> Docsets... -> Installed
+                    -> Add feed. Paste the URL and click OK <br>
+                    To Add corresponding icons download both icons (icon.png and icon@2x.png) inside docset folder
+                    next to Contents folder and meta.json file.
+                    <br>In Windows by default C:\Users\%username%\AppData\Local\Zeal\Zeal\docsets\&lt;DocsetName&gt;.docset
+                    <br>In Linux by default ~/local/share/zeal/docsets
+                </p>
+
             </div>
         </main>
-        <footer>Footer</footer>
     </div>
     <script src="//cdn.jsdelivr.net/vue/2.1.8/vue.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/axios/0.15.3/axios.min.js"></script>
